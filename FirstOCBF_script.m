@@ -5,6 +5,12 @@
 % and the obstacle position minus a raduis of 0.5.
 % \norm(p_system - p_obstacle) - radius.
 
+
+% This is based on the results shown in:
+%Comparative Analysis of Control Barrier Functions and 
+% Artificial Potential Fields for Obstacle Avoidance
+% http://ames.caltech.edu/singletary2020comparative.pdf
+
 %% System Ax + Bu
 I     = eye(2);
 A     = [zeros(size(I))];
@@ -25,7 +31,7 @@ for i = 1 : length(s)
     e(:,i) = xp(:,i) - r(:,i);
 
     %Barrier Function
-    alfa1=5;
+    alfa1=5;% Here you can test with different values of alpha, like in the article
     hx1=norm([xp(1,i);xp(2,i)]-[1;2])-0.5;
     hx2=norm([xp(1,i);xp(2,i)]-[2.5;3])-0.5;
     gamma=eye(2);
