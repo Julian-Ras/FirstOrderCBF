@@ -75,7 +75,7 @@ for i = 1 : length(s)
 end
 %% Plots
 %Errors (e1x, e2y)
-figure(5)
+figure(1)
 grid on; hold on;
 plot(s,e, 'LineWidth', 2);
 xlabel({'Time'}, 'interpreter', 'latex', 'fontsize', 14)
@@ -83,16 +83,27 @@ ylabel({'Errors'}, 'interpreter', 'latex', 'fontsize', 14)
 legend({'$e_{1}(t)$','$e_{2}(t)$'}, 'interpreter', 'latex', 'location', 'best', 'fontsize', 14);
 
 %System Trajectory
-figure(6)
-% plot(3 + sin(0:pi/50:2*pi), 5 + cos(0:pi/50:2*pi))  %Trajectory
-% hold on;
-plot(1 + 0.5*sin(0:pi/50:2*pi), 2 + 0.5*cos(0:pi/50:2*pi))  %Obstacles
-fill(1 + 0.5*sin(0:pi/50:2*pi), 2 + 0.5*cos(0:pi/50:2*pi), 'k')
+%Animated figure
+figure(2)
+fill(1 + 0.5*sin(0:pi/50:2*pi), 2 + 0.5*cos(0:pi/50:2*pi), 'k')%Obstacles
 hold on;
-plot(2.5 + 0.5*sin(0:pi/50:2*pi), 3 + 0.5*cos(0:pi/50:2*pi))  %...
 fill(2.5 + 0.5*sin(0:pi/50:2*pi), 3 + 0.5*cos(0:pi/50:2*pi), 'k')
 grid on; hold on;
-plot(xp(1,:),xp(2,:), 'LineWidth', 2)
+plot(3, 5, 'o', 'MarkerSize', 10, 'MarkerFaceColor', 'r');   
+% plot(xp(1,:),xp(2,:), 'LineWidth', 2) %not animated
 axis([-1 5 -1 6]);
+axis equal
 xlabel({'x'}, 'interpreter', 'latex', 'fontsize', 14)
 ylabel({'y'}, 'interpreter', 'latex', 'fontsize', 14)
+
+
+%Animation loop
+h = animatedline('Color', 'b', 'LineWidth', 2); % animated
+for k = 1:10:length(xp)
+    if isvalid(h)
+        addpoints(h, xp(1,k), xp(2,k));
+        drawnow;
+    else
+        break;
+    end
+end
